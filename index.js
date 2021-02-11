@@ -35,20 +35,21 @@ function playAnimation(button){
 }
 
 function gameOver(){
-  var audio = new Audio("sounds/wrong.mp3");
-  audio.play();
-  $("body").addClass("game-over");
-  setTimeout(function() {
-    $("body").removeClass("game-over");
-  }, 100);
-  $("#level-title").text("Game Over, Press Any Key to Restart");
-
   //set status to starting value
   colorSequence = [];
   currentColorSequence = [];
   if(debug) $("#sequence").text(currentColorSequence);
   level = 0;
   waitingKeydown = true;
+
+
+  var audio = new Audio("sounds/wrong.mp3");
+  audio.play();
+  $("body").addClass("game-over");
+  setTimeout(function() {
+    $("body").removeClass("game-over");
+  }, 100);
+  $("#level-title").text("Game Over, Press Any Key or Touch Here to Restart");
 }
 
 function gameLoop(){
@@ -97,6 +98,14 @@ $(document).on("keydown", function(){
     showNewLevel();
   }
 });
+
+//for mobile visitors
+$("#level-title").click(function(){
+  if(waitingKeydown) {
+    waitingKeydown = false;
+    showNewLevel();
+  }
+})
 
 
 //attendi un tasto per partire
